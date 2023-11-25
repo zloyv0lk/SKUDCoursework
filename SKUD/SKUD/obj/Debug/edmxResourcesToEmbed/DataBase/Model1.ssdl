@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище FXDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="accounts">
+    <Key>
+      <PropertyRef Name="account_id" />
+    </Key>
+    <Property Name="account_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="department">
+    <Key>
+      <PropertyRef Name="department_id" />
+    </Key>
+    <Property Name="department_id" Type="int" Nullable="false" />
+    <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="employeers">
+    <Key>
+      <PropertyRef Name="employeer_id" />
+    </Key>
+    <Property Name="employeer_id" Type="int" Nullable="false" />
+    <Property Name="surname" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="patronomyc" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="notes" Type="varchar" MaxLength="500" />
+    <Property Name="department_id" Type="int" Nullable="false" />
+    <Property Name="post_id" Type="int" Nullable="false" />
+    <Property Name="account_id" Type="int" />
+    <Property Name="pass_id" Type="int" />
+    <Property Name="photo" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="event">
+    <Key>
+      <PropertyRef Name="event_id" />
+    </Key>
+    <Property Name="event_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="employeer_id" Type="int" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="event_type_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="event_type">
+    <Key>
+      <PropertyRef Name="event_type_id" />
+    </Key>
+    <Property Name="event_type_id" Type="int" Nullable="false" />
+    <Property Name="titile" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="guest">
+    <Key>
+      <PropertyRef Name="guest_id" />
+    </Key>
+    <Property Name="guest_id" Type="int" Nullable="false" />
+    <Property Name="surname" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="patronomyc" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="passport" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="date" Type="date" />
+    <Property Name="telephone" Type="varchar" MaxLength="50" />
+    <Property Name="guest_type_id" Type="int" />
+  </EntityType>
+  <EntityType Name="guest_event">
+    <Key>
+      <PropertyRef Name="event_id" />
+    </Key>
+    <Property Name="event_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="guest_id" Type="int" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="event_type_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="guest_type">
+    <Key>
+      <PropertyRef Name="guest_type_id" />
+    </Key>
+    <Property Name="guest_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="title" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="pass">
+    <Key>
+      <PropertyRef Name="pass_id" />
+    </Key>
+    <Property Name="pass_id" Type="int" Nullable="false" />
+    <Property Name="begin_date" Type="date" />
+    <Property Name="end_date" Type="date" />
+    <Property Name="pass_code" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="post">
+    <Key>
+      <PropertyRef Name="post_id" />
+    </Key>
+    <Property Name="post_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_employeers_accounts">
+    <End Role="accounts" Type="Self.accounts" Multiplicity="0..1" />
+    <End Role="employeers" Type="Self.employeers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="accounts">
+        <PropertyRef Name="account_id" />
+      </Principal>
+      <Dependent Role="employeers">
+        <PropertyRef Name="account_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_employeers_department">
+    <End Role="department" Type="Self.department" Multiplicity="1" />
+    <End Role="employeers" Type="Self.employeers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="department">
+        <PropertyRef Name="department_id" />
+      </Principal>
+      <Dependent Role="employeers">
+        <PropertyRef Name="department_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_employeers_post">
+    <End Role="post" Type="Self.post" Multiplicity="1" />
+    <End Role="employeers" Type="Self.employeers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="post">
+        <PropertyRef Name="post_id" />
+      </Principal>
+      <Dependent Role="employeers">
+        <PropertyRef Name="post_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_event_employeers">
+    <End Role="employeers" Type="Self.employeers" Multiplicity="0..1" />
+    <End Role="event" Type="Self.event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employeers">
+        <PropertyRef Name="employeer_id" />
+      </Principal>
+      <Dependent Role="event">
+        <PropertyRef Name="employeer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_event_event_type">
+    <End Role="event_type" Type="Self.event_type" Multiplicity="1" />
+    <End Role="event" Type="Self.event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="event_type">
+        <PropertyRef Name="event_type_id" />
+      </Principal>
+      <Dependent Role="event">
+        <PropertyRef Name="event_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_guest_event_event_type">
+    <End Role="event_type" Type="Self.event_type" Multiplicity="1" />
+    <End Role="guest_event" Type="Self.guest_event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="event_type">
+        <PropertyRef Name="event_type_id" />
+      </Principal>
+      <Dependent Role="guest_event">
+        <PropertyRef Name="event_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_guest_event_guest">
+    <End Role="guest" Type="Self.guest" Multiplicity="1" />
+    <End Role="guest_event" Type="Self.guest_event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="guest">
+        <PropertyRef Name="guest_id" />
+      </Principal>
+      <Dependent Role="guest_event">
+        <PropertyRef Name="guest_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_guest_guest_type">
+    <End Role="guest_type" Type="Self.guest_type" Multiplicity="0..1" />
+    <End Role="guest" Type="Self.guest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="guest_type">
+        <PropertyRef Name="guest_type_id" />
+      </Principal>
+      <Dependent Role="guest">
+        <PropertyRef Name="guest_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_pass_employeers1">
+    <End Role="employeers" Type="Self.employeers" Multiplicity="1" />
+    <End Role="pass" Type="Self.pass" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="employeers">
+        <PropertyRef Name="employeer_id" />
+      </Principal>
+      <Dependent Role="pass">
+        <PropertyRef Name="pass_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище FXDBModelContainer">
+    <EntitySet Name="accounts" EntityType="Self.accounts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employeers" EntityType="Self.employeers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="event" EntityType="Self.event" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="event_type" EntityType="Self.event_type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="guest" EntityType="Self.guest" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="guest_event" EntityType="Self.guest_event" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="guest_type" EntityType="Self.guest_type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="pass" EntityType="Self.pass" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_employeers_accounts" Association="Self.FK_employeers_accounts">
+      <End Role="accounts" EntitySet="accounts" />
+      <End Role="employeers" EntitySet="employeers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_employeers_department" Association="Self.FK_employeers_department">
+      <End Role="department" EntitySet="department" />
+      <End Role="employeers" EntitySet="employeers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_employeers_post" Association="Self.FK_employeers_post">
+      <End Role="post" EntitySet="post" />
+      <End Role="employeers" EntitySet="employeers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_event_employeers" Association="Self.FK_event_employeers">
+      <End Role="employeers" EntitySet="employeers" />
+      <End Role="event" EntitySet="event" />
+    </AssociationSet>
+    <AssociationSet Name="FK_event_event_type" Association="Self.FK_event_event_type">
+      <End Role="event_type" EntitySet="event_type" />
+      <End Role="event" EntitySet="event" />
+    </AssociationSet>
+    <AssociationSet Name="FK_guest_event_event_type" Association="Self.FK_guest_event_event_type">
+      <End Role="event_type" EntitySet="event_type" />
+      <End Role="guest_event" EntitySet="guest_event" />
+    </AssociationSet>
+    <AssociationSet Name="FK_guest_event_guest" Association="Self.FK_guest_event_guest">
+      <End Role="guest" EntitySet="guest" />
+      <End Role="guest_event" EntitySet="guest_event" />
+    </AssociationSet>
+    <AssociationSet Name="FK_guest_guest_type" Association="Self.FK_guest_guest_type">
+      <End Role="guest_type" EntitySet="guest_type" />
+      <End Role="guest" EntitySet="guest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_pass_employeers1" Association="Self.FK_pass_employeers1">
+      <End Role="employeers" EntitySet="employeers" />
+      <End Role="pass" EntitySet="pass" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

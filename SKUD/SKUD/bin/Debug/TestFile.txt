@@ -1,0 +1,4 @@
+**Card Detected:**
+Card UID: 63 86 D8 0D
+Card SAK: 08
+PICC ty

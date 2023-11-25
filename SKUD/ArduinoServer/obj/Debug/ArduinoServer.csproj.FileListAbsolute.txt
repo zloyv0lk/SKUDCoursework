@@ -1,0 +1,10 @@
+C:\Users\andrey\Desktop\SKUD\ArduinoServer\bin\Debug\ArduinoServer.exe.config
+C:\Users\andrey\Desktop\SKUD\ArduinoServer\bin\Debug\ArduinoServer.exe
+C:\Users\andrey\Desktop\SKUD\ArduinoServer\bin\Debug\ArduinoServer.pdb
+C:\Users\andrey\Desktop\SKUD\ArduinoServer\obj\Debug\ArduinoServer.csproj.SuggestedBindingRedirects.cache
+C:\Users\andrey\Desktop\SKUD\ArduinoServer\obj\Debug\ArduinoServer.csproj.CoreCompileInputs.cache
+C:\Users\andrey\Desktop\SKUD\ArduinoServer\obj\Debug\ArduinoServer.exe
+C:\Users\andrey\Desktop\SKUD\ArduinoServer\obj\Debug\ArduinoServer.pdb
+C:\Users\andrey\Desktop\SKUD\ArduinoServer\obj\Debug\ArduinoServer.Properties.Resources.resources
+C:\Users\andrey\Desktop\SKUD\ArduinoServer\obj\Debug\ArduinoServer.csproj.GenerateResource.cache
+C:\Users\andrey\Desktop\SKUD\ArduinoServer\obj\Debug\ArduinoServer.csproj.AssemblyReference.cache

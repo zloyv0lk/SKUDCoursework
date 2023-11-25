@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a20f5f4c-63d2-4374-ad52-3b3cde39490c": {
+      "ProjectGuid": "a20f5f4c-63d2-4374-ad52-3b3cde39490c",
+      "DisplayName": "SKUD",
+      "ColorIndex": 0
+    },
+    "10b4015b-7d58-40c8-8cca-5478f9076bdb": {
+      "ProjectGuid": "10b4015b-7d58-40c8-8cca-5478f9076bdb",
+      "DisplayName": "ConsoleApp1",
+      "ColorIndex": 1
+    },
+    "83d8f83b-3b68-4179-b365-3672d42cdb89": {
+      "ProjectGuid": "83d8f83b-3b68-4179-b365-3672d42cdb89",
+      "DisplayName": "ArduinoServer",
+      "ColorIndex": 2
+    },
+    "f02b0834-386c-4f76-a129-b83603bf4b35": {
+      "ProjectGuid": "f02b0834-386c-4f76-a129-b83603bf4b35",
+      "DisplayName": "WindowsFormsApp1",
+      "ColorIndex": 3
+    },
+    "d4e00f7c-209f-45a2-bd23-a59dee492aed": {
+      "ProjectGuid": "d4e00f7c-209f-45a2-bd23-a59dee492aed",
+      "DisplayName": "ConsoleApp2",
+      "ColorIndex": 4
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Прочие файлы",
+      "ColorIndex": -1
+    },
+    "5e8cd9cf-75dc-428f-b112-bc416f014a21": {
+      "ProjectGuid": "5e8cd9cf-75dc-428f-b112-bc416f014a21",
+      "DisplayName": "ArduinoServer",
+      "ColorIndex": 5
+    }
+  },
+  "NextColorIndex": 6
+}

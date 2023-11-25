@@ -1,0 +1,211 @@
+﻿<Page x:Class="SKUD.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SKUD.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title="MainPAge">
+    <Page.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="StackPanel" x:Key="hide_guestSP_Style">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=guestRB, Path=IsChecked}"
+                        Value="True">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="StackPanel" x:Key="hide_empSP_Style">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=empRB, Path=IsChecked}"
+                        Value="True">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="ButtonRounded" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" CornerRadius="10" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <TabControl x:Name="options" TabStripPlacement="Left" Grid.ColumnSpan="2">
+            <TabItem x:Name="employeersTab">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">Сотрудники</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                            <ListView x:Name="empLV" Height="500" Width="550" SelectionChanged="empLV_SelectionChanged">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding surname}" ></TextBlock>
+                                                <TextBlock Margin="5,0,0,0" Text="{Binding name}"></TextBlock>
+                                                <TextBlock Margin="5,0,0,0" Text="{Binding patronomyc}"></TextBlock>
+                                            </StackPanel>
+                                            <TextBlock FontWeight="Heavy" Text="{Binding department.title}"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <StackPanel VerticalAlignment="Bottom">
+                                <ComboBox>
+                                    <ComboBoxItem>
+                                        <TextBlock>2434</TextBlock>
+                                    </ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24">Редактирование</TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel>
+                                    <Image Source="/Resources/noPhoto.png" Width="200"></Image>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock  FontSize="18">Отдел:</TextBlock>
+                                    <TextBlock  FontSize="18">ФИО:</TextBlock>
+                                    <TextBlock  FontSize="18">Должность:</TextBlock>
+                                    <TextBlock  FontSize="18">Номер:</TextBlock>
+                                    <TextBlock  FontSize="18">Примечание:</TextBlock>
+                                    <TextBlock Visibility="Collapsed" Margin="0,5,0,0" FontSize="18">Дата открытия:</TextBlock>
+                                    <TextBlock Visibility="Collapsed" Margin="0,5,0,0" FontSize="18">Дата закрытия:</TextBlock>
+                                </StackPanel>
+                                <StackPanel Width="300">
+                                    <ComboBox x:Name="departmentCB">
+                                        <TextBlock>Администрация</TextBlock>
+                                        <TextBlock>Офис</TextBlock>
+                                        <TextBlock>Цех</TextBlock>
+                                        <TextBlock>Охрана</TextBlock>
+                                    </ComboBox>
+                                    <TextBox x:Name="fioTB" Margin="0,5,0,0"></TextBox>
+                                    <ComboBox x:Name="postTB" Margin="0,5,0,0">
+                                        <TextBlock>Генеральный директор</TextBlock>
+                                        <TextBlock>Директор</TextBlock>
+                                        <TextBlock>Инженер</TextBlock>
+                                        <TextBlock>Слесарь</TextBlock>
+                                    </ComboBox>
+                                    <TextBox x:Name="idTB" Margin="0,5,0,0"></TextBox>
+                                    <TextBox x:Name="noteTB" Margin="0,5,0,0" Height="50"></TextBox>
+                                    <DatePicker x:Name="beginDateDP" Visibility="Collapsed" Margin="0,5,0,0"></DatePicker>
+                                    <DatePicker x:Name="endDateDP" Visibility="Collapsed" Margin="0,5,0,0"></DatePicker>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel>
+                                    <Button Margin="55,0,55,0">Изменить фото</Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="empltoyeersTab" Height="26" VerticalAlignment="Bottom">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">Отчётность</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock HorizontalAlignment="Center" FontSize="18">Список субъектов находящихся в объекте</TextBlock>
+                        <ListView x:Name="actualEmpGuestLV" Height="600">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <StackPanel x:Name="empSP" Style="{StaticResource hide_guestSP_Style}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontWeight="Heavy"  Text="{Binding employeer.surname}" ></TextBlock>
+                                                <TextBlock FontWeight="Heavy"  Margin="5,0,0,0" Text="{Binding employeer.name}"></TextBlock>
+                                                <TextBlock FontWeight="Heavy"  Margin="5,0,0,0" Text="{Binding employeer.patronomyc}"></TextBlock>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding employeer.department.title}"></TextBlock>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock>Время входа:</TextBlock>
+                                                <TextBlock Text="{Binding date,StringFormat='{}{0:hh:mm}'}"></TextBlock>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel x:Name="guestSP" Style="{StaticResource hide_empSP_Style}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontWeight="Heavy"  Text="{Binding guest.surname}" ></TextBlock>
+                                                <TextBlock FontWeight="Heavy"  Margin="5,0,0,0" Text="{Binding guest.name}"></TextBlock>
+                                                <TextBlock FontWeight="Heavy"  Margin="5,0,0,0" Text="{Binding guest.patronomyc}"></TextBlock>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding guest.guest_type.title}"></TextBlock>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock>Время входа:</TextBlock>
+                                                <TextBlock Text="{Binding date,StringFormat='{}{0:hh:mm}'}"></TextBlock>
+                                            </StackPanel>
+                                                <TextBlock Text="{Binding guest.telephone}"></TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <RadioButton x:Name="empRB"  IsChecked="True" Click="empRB_Checked" Content="Сотрудники"/>
+                        <RadioButton x:Name="guestRB" Click="guestRB_Checked">Гости</RadioButton>
+                        <Button x:Name="excelBtn" Click="excelBtn_Click">Составить отчёт посещаемости</Button>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

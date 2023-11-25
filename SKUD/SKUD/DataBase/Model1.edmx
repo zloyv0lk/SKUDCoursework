@@ -1,0 +1,674 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище FXDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="accounts">
+          <Key>
+            <PropertyRef Name="account_id" />
+          </Key>
+          <Property Name="account_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="int" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="employeers">
+          <Key>
+            <PropertyRef Name="employeer_id" />
+          </Key>
+          <Property Name="employeer_id" Type="int" Nullable="false" />
+          <Property Name="surname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="patronomyc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="notes" Type="varchar" MaxLength="500" />
+          <Property Name="department_id" Type="int" Nullable="false" />
+          <Property Name="post_id" Type="int" Nullable="false" />
+          <Property Name="account_id" Type="int" />
+          <Property Name="pass_id" Type="int" />
+          <Property Name="photo" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="event">
+          <Key>
+            <PropertyRef Name="event_id" />
+          </Key>
+          <Property Name="event_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employeer_id" Type="int" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="event_type_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="event_type">
+          <Key>
+            <PropertyRef Name="event_type_id" />
+          </Key>
+          <Property Name="event_type_id" Type="int" Nullable="false" />
+          <Property Name="titile" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="guest">
+          <Key>
+            <PropertyRef Name="guest_id" />
+          </Key>
+          <Property Name="guest_id" Type="int" Nullable="false" />
+          <Property Name="surname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="patronomyc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="passport" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="date" Type="date" />
+          <Property Name="telephone" Type="varchar" MaxLength="50" />
+          <Property Name="guest_type_id" Type="int" />
+        </EntityType>
+        <EntityType Name="guest_event">
+          <Key>
+            <PropertyRef Name="event_id" />
+          </Key>
+          <Property Name="event_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="guest_id" Type="int" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="event_type_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="guest_type">
+          <Key>
+            <PropertyRef Name="guest_type_id" />
+          </Key>
+          <Property Name="guest_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="pass">
+          <Key>
+            <PropertyRef Name="pass_id" />
+          </Key>
+          <Property Name="pass_id" Type="int" Nullable="false" />
+          <Property Name="begin_date" Type="date" />
+          <Property Name="end_date" Type="date" />
+          <Property Name="pass_code" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="post">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_employeers_accounts">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="0..1" />
+          <End Role="employeers" Type="Self.employeers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="employeers">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employeers_department">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="employeers" Type="Self.employeers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="employeers">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employeers_post">
+          <End Role="post" Type="Self.post" Multiplicity="1" />
+          <End Role="employeers" Type="Self.employeers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="employeers">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_event_employeers">
+          <End Role="employeers" Type="Self.employeers" Multiplicity="0..1" />
+          <End Role="event" Type="Self.event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employeers">
+              <PropertyRef Name="employeer_id" />
+            </Principal>
+            <Dependent Role="event">
+              <PropertyRef Name="employeer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_event_event_type">
+          <End Role="event_type" Type="Self.event_type" Multiplicity="1" />
+          <End Role="event" Type="Self.event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="event_type">
+              <PropertyRef Name="event_type_id" />
+            </Principal>
+            <Dependent Role="event">
+              <PropertyRef Name="event_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_guest_event_event_type">
+          <End Role="event_type" Type="Self.event_type" Multiplicity="1" />
+          <End Role="guest_event" Type="Self.guest_event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="event_type">
+              <PropertyRef Name="event_type_id" />
+            </Principal>
+            <Dependent Role="guest_event">
+              <PropertyRef Name="event_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_guest_event_guest">
+          <End Role="guest" Type="Self.guest" Multiplicity="1" />
+          <End Role="guest_event" Type="Self.guest_event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="guest">
+              <PropertyRef Name="guest_id" />
+            </Principal>
+            <Dependent Role="guest_event">
+              <PropertyRef Name="guest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_guest_guest_type">
+          <End Role="guest_type" Type="Self.guest_type" Multiplicity="0..1" />
+          <End Role="guest" Type="Self.guest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="guest_type">
+              <PropertyRef Name="guest_type_id" />
+            </Principal>
+            <Dependent Role="guest">
+              <PropertyRef Name="guest_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pass_employeers1">
+          <End Role="employeers" Type="Self.employeers" Multiplicity="1" />
+          <End Role="pass" Type="Self.pass" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="employeers">
+              <PropertyRef Name="employeer_id" />
+            </Principal>
+            <Dependent Role="pass">
+              <PropertyRef Name="pass_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище FXDBModelContainer">
+          <EntitySet Name="accounts" EntityType="Self.accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employeers" EntityType="Self.employeers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="event" EntityType="Self.event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="event_type" EntityType="Self.event_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="guest" EntityType="Self.guest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="guest_event" EntityType="Self.guest_event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="guest_type" EntityType="Self.guest_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pass" EntityType="Self.pass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_employeers_accounts" Association="Self.FK_employeers_accounts">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="employeers" EntitySet="employeers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employeers_department" Association="Self.FK_employeers_department">
+            <End Role="department" EntitySet="department" />
+            <End Role="employeers" EntitySet="employeers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employeers_post" Association="Self.FK_employeers_post">
+            <End Role="post" EntitySet="post" />
+            <End Role="employeers" EntitySet="employeers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_event_employeers" Association="Self.FK_event_employeers">
+            <End Role="employeers" EntitySet="employeers" />
+            <End Role="event" EntitySet="event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_event_event_type" Association="Self.FK_event_event_type">
+            <End Role="event_type" EntitySet="event_type" />
+            <End Role="event" EntitySet="event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_guest_event_event_type" Association="Self.FK_guest_event_event_type">
+            <End Role="event_type" EntitySet="event_type" />
+            <End Role="guest_event" EntitySet="guest_event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_guest_event_guest" Association="Self.FK_guest_event_guest">
+            <End Role="guest" EntitySet="guest" />
+            <End Role="guest_event" EntitySet="guest_event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_guest_guest_type" Association="Self.FK_guest_guest_type">
+            <End Role="guest_type" EntitySet="guest_type" />
+            <End Role="guest" EntitySet="guest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pass_employeers1" Association="Self.FK_pass_employeers1">
+            <End Role="employeers" EntitySet="employeers" />
+            <End Role="pass" EntitySet="pass" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FXDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="account_id" />
+          </Key>
+          <Property Name="account_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="employeers" Relationship="Self.FK_employeers_accounts" FromRole="accounts" ToRole="employeers" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="employeers" Relationship="Self.FK_employeers_department" FromRole="department" ToRole="employeers" />
+        </EntityType>
+        <EntityType Name="employeer">
+          <Key>
+            <PropertyRef Name="employeer_id" />
+          </Key>
+          <Property Name="employeer_id" Type="Int32" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="patronomyc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="pass_id" Type="Int32" />
+          <NavigationProperty Name="account" Relationship="Self.FK_employeers_accounts" FromRole="employeers" ToRole="accounts" />
+          <NavigationProperty Name="department" Relationship="Self.FK_employeers_department" FromRole="employeers" ToRole="department" />
+          <NavigationProperty Name="post" Relationship="Self.FK_employeers_post" FromRole="employeers" ToRole="post" />
+          <NavigationProperty Name="events" Relationship="Self.FK_event_employeers" FromRole="employeers" ToRole="event" />
+          <NavigationProperty Name="pass" Relationship="Self.FK_pass_employeers1" FromRole="employeers" ToRole="pass" />
+          <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="event">
+          <Key>
+            <PropertyRef Name="event_id" />
+          </Key>
+          <Property Name="event_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="employeer" Relationship="Self.FK_event_employeers" FromRole="event" ToRole="employeers" />
+          <NavigationProperty Name="event_type" Relationship="Self.FK_event_event_type" FromRole="event" ToRole="event_type" />
+        </EntityType>
+        <EntityType Name="event_type">
+          <Key>
+            <PropertyRef Name="event_type_id" />
+          </Key>
+          <Property Name="event_type_id" Type="Int32" Nullable="false" />
+          <Property Name="titile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="events" Relationship="Self.FK_event_event_type" FromRole="event_type" ToRole="event" />
+          <NavigationProperty Name="guest_event" Relationship="Self.FK_guest_event_event_type" FromRole="event_type" ToRole="guest_event" />
+        </EntityType>
+        <EntityType Name="guest_event">
+          <Key>
+            <PropertyRef Name="event_id" />
+          </Key>
+          <Property Name="event_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="event_type" Relationship="Self.FK_guest_event_event_type" FromRole="guest_event" ToRole="event_type" />
+          <NavigationProperty Name="guest" Relationship="FXDBModel.FK_guest_event_guest" FromRole="guest_event" ToRole="guest" />
+        </EntityType>
+        <EntityType Name="pass">
+          <Key>
+            <PropertyRef Name="pass_id" />
+          </Key>
+          <Property Name="pass_id" Type="Int32" Nullable="false" />
+          <Property Name="begin_date" Type="DateTime" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="employeer" Relationship="Self.FK_pass_employeers1" FromRole="pass" ToRole="employeers" />
+          <Property Name="pass_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="post">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="employeers" Relationship="Self.FK_employeers_post" FromRole="post" ToRole="employeers" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_employeers_accounts">
+          <End Role="accounts" Type="Self.account" Multiplicity="0..1" />
+          <End Role="employeers" Type="Self.employeer" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_employeers_department">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="employeers" Type="Self.employeer" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_employeers_post">
+          <End Role="post" Type="Self.post" Multiplicity="1" />
+          <End Role="employeers" Type="Self.employeer" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_event_employeers">
+          <End Role="employeers" Type="Self.employeer" Multiplicity="0..1" />
+          <End Role="event" Type="Self.event" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_pass_employeers1">
+          <End Role="employeers" Type="Self.employeer" Multiplicity="1" />
+          <End Role="pass" Type="Self.pass" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="employeers">
+              <PropertyRef Name="employeer_id" />
+            </Principal>
+            <Dependent Role="pass">
+              <PropertyRef Name="pass_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_event_event_type">
+          <End Role="event_type" Type="Self.event_type" Multiplicity="1" />
+          <End Role="event" Type="Self.event" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_guest_event_event_type">
+          <End Role="event_type" Type="Self.event_type" Multiplicity="1" />
+          <End Role="guest_event" Type="Self.guest_event" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="FXDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="accounts" EntityType="Self.account" />
+          <EntitySet Name="departments" EntityType="Self.department" />
+          <EntitySet Name="employeers" EntityType="Self.employeer" />
+          <EntitySet Name="events" EntityType="Self.event" />
+          <EntitySet Name="event_type" EntityType="Self.event_type" />
+          <EntitySet Name="guest_event" EntityType="Self.guest_event" />
+          <EntitySet Name="passes" EntityType="Self.pass" />
+          <EntitySet Name="posts" EntityType="Self.post" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_employeers_accounts" Association="Self.FK_employeers_accounts">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="employeers" EntitySet="employeers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employeers_department" Association="Self.FK_employeers_department">
+            <End Role="department" EntitySet="departments" />
+            <End Role="employeers" EntitySet="employeers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employeers_post" Association="Self.FK_employeers_post">
+            <End Role="post" EntitySet="posts" />
+            <End Role="employeers" EntitySet="employeers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_event_employeers" Association="Self.FK_event_employeers">
+            <End Role="employeers" EntitySet="employeers" />
+            <End Role="event" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pass_employeers1" Association="Self.FK_pass_employeers1">
+            <End Role="employeers" EntitySet="employeers" />
+            <End Role="pass" EntitySet="passes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_event_event_type" Association="Self.FK_event_event_type">
+            <End Role="event_type" EntitySet="event_type" />
+            <End Role="event" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_guest_event_event_type" Association="Self.FK_guest_event_event_type">
+            <End Role="event_type" EntitySet="event_type" />
+            <End Role="guest_event" EntitySet="guest_event" />
+          </AssociationSet>
+          <EntitySet Name="guests" EntityType="FXDBModel.guest" />
+          <EntitySet Name="guest_type" EntityType="FXDBModel.guest_type" />
+          <AssociationSet Name="FK_guest_event_guest" Association="FXDBModel.FK_guest_event_guest">
+            <End Role="guest" EntitySet="guests" />
+            <End Role="guest_event" EntitySet="guest_event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_guest_guest_type" Association="FXDBModel.FK_guest_guest_type">
+            <End Role="guest_type" EntitySet="guest_type" />
+            <End Role="guest" EntitySet="guests" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="guest">
+          <Key>
+            <PropertyRef Name="guest_id" />
+          </Key>
+          <Property Name="guest_id" Type="Int32" Nullable="false" />
+          <Property Name="surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="patronomyc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="passport" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="guest_event" Relationship="FXDBModel.FK_guest_event_guest" FromRole="guest" ToRole="guest_event" />
+          <NavigationProperty Name="guest_type" Relationship="FXDBModel.FK_guest_guest_type" FromRole="guest" ToRole="guest_type" />
+        </EntityType>
+        <EntityType Name="guest_type">
+          <Key>
+            <PropertyRef Name="guest_type_id" />
+          </Key>
+          <Property Name="guest_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="guests" Relationship="FXDBModel.FK_guest_guest_type" FromRole="guest_type" ToRole="guest" />
+        </EntityType>
+        <Association Name="FK_guest_event_guest">
+          <End Type="FXDBModel.guest" Role="guest" Multiplicity="1" />
+          <End Type="FXDBModel.guest_event" Role="guest_event" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_guest_guest_type">
+          <End Type="FXDBModel.guest_type" Role="guest_type" Multiplicity="0..1" />
+          <End Type="FXDBModel.guest" Role="guest" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище FXDBModelContainer" CdmEntityContainer="FXDBEntities">
+          <EntitySetMapping Name="accounts">
+            <EntityTypeMapping TypeName="FXDBModel.account">
+              <MappingFragment StoreEntitySet="accounts">
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="departments">
+            <EntityTypeMapping TypeName="FXDBModel.department">
+              <MappingFragment StoreEntitySet="department">
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employeers">
+            <EntityTypeMapping TypeName="FXDBModel.employeer">
+              <MappingFragment StoreEntitySet="employeers">
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="employeer_id" ColumnName="employeer_id" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="patronomyc" ColumnName="patronomyc" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="pass_id" ColumnName="pass_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="events">
+            <EntityTypeMapping TypeName="FXDBModel.event">
+              <MappingFragment StoreEntitySet="event">
+                <ScalarProperty Name="event_id" ColumnName="event_id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="event_type">
+            <EntityTypeMapping TypeName="FXDBModel.event_type">
+              <MappingFragment StoreEntitySet="event_type">
+                <ScalarProperty Name="event_type_id" ColumnName="event_type_id" />
+                <ScalarProperty Name="titile" ColumnName="titile" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="guest_event">
+            <EntityTypeMapping TypeName="FXDBModel.guest_event">
+              <MappingFragment StoreEntitySet="guest_event">
+                <ScalarProperty Name="event_id" ColumnName="event_id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="passes">
+            <EntityTypeMapping TypeName="FXDBModel.pass">
+              <MappingFragment StoreEntitySet="pass">
+                <ScalarProperty Name="pass_code" ColumnName="pass_code" />
+                <ScalarProperty Name="pass_id" ColumnName="pass_id" />
+                <ScalarProperty Name="begin_date" ColumnName="begin_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="posts">
+            <EntityTypeMapping TypeName="FXDBModel.post">
+              <MappingFragment StoreEntitySet="post">
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="FXDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_employeers_accounts" TypeName="FXDBModel.FK_employeers_accounts" StoreEntitySet="employeers">
+            <EndProperty Name="accounts">
+              <ScalarProperty Name="account_id" ColumnName="account_id" />
+            </EndProperty>
+            <EndProperty Name="employeers">
+              <ScalarProperty Name="employeer_id" ColumnName="employeer_id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="account_id" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_employeers_department" TypeName="FXDBModel.FK_employeers_department" StoreEntitySet="employeers">
+            <EndProperty Name="department">
+              <ScalarProperty Name="department_id" ColumnName="department_id" />
+            </EndProperty>
+            <EndProperty Name="employeers">
+              <ScalarProperty Name="employeer_id" ColumnName="employeer_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_employeers_post" TypeName="FXDBModel.FK_employeers_post" StoreEntitySet="employeers">
+            <EndProperty Name="post">
+              <ScalarProperty Name="post_id" ColumnName="post_id" />
+            </EndProperty>
+            <EndProperty Name="employeers">
+              <ScalarProperty Name="employeer_id" ColumnName="employeer_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_event_employeers" TypeName="FXDBModel.FK_event_employeers" StoreEntitySet="event">
+            <EndProperty Name="employeers">
+              <ScalarProperty Name="employeer_id" ColumnName="employeer_id" />
+            </EndProperty>
+            <EndProperty Name="event">
+              <ScalarProperty Name="event_id" ColumnName="event_id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="employeer_id" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_event_event_type" TypeName="FXDBModel.FK_event_event_type" StoreEntitySet="event">
+            <EndProperty Name="event_type">
+              <ScalarProperty Name="event_type_id" ColumnName="event_type_id" />
+            </EndProperty>
+            <EndProperty Name="event">
+              <ScalarProperty Name="event_id" ColumnName="event_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_guest_event_event_type" TypeName="FXDBModel.FK_guest_event_event_type" StoreEntitySet="guest_event">
+            <EndProperty Name="event_type">
+              <ScalarProperty Name="event_type_id" ColumnName="event_type_id" />
+            </EndProperty>
+            <EndProperty Name="guest_event">
+              <ScalarProperty Name="event_id" ColumnName="event_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="guests">
+            <EntityTypeMapping TypeName="FXDBModel.guest">
+              <MappingFragment StoreEntitySet="guest">
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="passport" ColumnName="passport" />
+                <ScalarProperty Name="patronomyc" ColumnName="patronomyc" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="guest_id" ColumnName="guest_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="guest_type">
+            <EntityTypeMapping TypeName="FXDBModel.guest_type">
+              <MappingFragment StoreEntitySet="guest_type">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="guest_type_id" ColumnName="guest_type_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_guest_event_guest" TypeName="FXDBModel.FK_guest_event_guest" StoreEntitySet="guest_event">
+            <EndProperty Name="guest_event">
+              <ScalarProperty Name="event_id" ColumnName="event_id" />
+            </EndProperty>
+            <EndProperty Name="guest">
+              <ScalarProperty Name="guest_id" ColumnName="guest_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_guest_guest_type" TypeName="FXDBModel.FK_guest_guest_type" StoreEntitySet="guest">
+            <EndProperty Name="guest">
+              <ScalarProperty Name="guest_id" ColumnName="guest_id" />
+            </EndProperty>
+            <EndProperty Name="guest_type">
+              <ScalarProperty Name="guest_type_id" ColumnName="guest_type_id" />
+            </EndProperty>
+            <Condition ColumnName="guest_type_id" IsNull="false" />
+          </AssociationSetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

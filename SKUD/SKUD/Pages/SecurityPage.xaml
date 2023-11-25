@@ -1,0 +1,222 @@
+﻿<Page x:Class="SKUD.Pages.SecurityPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SKUD.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title="SecurityPage">
+    <Page.Resources>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <ControlTemplate x:Key="ButtonRounded" TargetType="{x:Type ButtonBase}">
+            <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="10" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsDefaulted" Value="true">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Page.Resources>
+
+   <Grid>
+        <TabControl x:Name="options" TabStripPlacement="Left" Grid.ColumnSpan="2">
+            <TabItem x:Name="employeersTab">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">Гости</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                        <ListView x:Name="guestLV" Height="500" Width="550" SelectionChanged="empLV_SelectionChanged">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding surname}" ></TextBlock>
+                                            <TextBlock Margin="5,0,0,0" Text="{Binding name}"></TextBlock>
+                                            <TextBlock Margin="5,0,0,0" Text="{Binding patronomyc}"></TextBlock>
+                                        </StackPanel>
+                                        <TextBlock FontWeight="Heavy" Text="{Binding date}"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <StackPanel VerticalAlignment="Bottom"/>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel/>
+                                <StackPanel>
+                                    <TextBlock  FontSize="18">Имя:</TextBlock>
+                                </StackPanel>
+                                <StackPanel Width="300">
+                                    <TextBox x:Name="fioSearch" Margin="0,5,0,0" TextChanged="fioSearch_TextChanged"></TextBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24">Информация:</TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel/>
+                                <StackPanel>
+                                    <TextBlock  FontSize="18">ФИО:</TextBlock>
+                                    <TextBlock  FontSize="18">Паспорт:</TextBlock>
+                                    <TextBlock  FontSize="18">Дата:</TextBlock>
+                                </StackPanel>
+                                <StackPanel Width="300">
+                                    <TextBox x:Name="fioTB" Margin="0,5,0,0"></TextBox>
+                                    <TextBox x:Name="passportTB" Margin="0,5,0,0"></TextBox>
+                                    <TextBox x:Name="dateTB" Margin="0,5,0,0"></TextBox>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel>
+                                <Button x:Name="guestEntryBtn" Template="{DynamicResource ButtonRounded}" FontSize="36" Margin="10" Click="guestEntryBtn_Click">Вход</Button>
+                                <Button x:Name="guestExitBtn"  Template="{DynamicResource ButtonRounded}" FontSize="36" Margin="10" Click="guestExitBtn_Click">Выход</Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="eventTab" HorizontalAlignment="Left" Width="66">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">События</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <StackPanel>
+                        <ListView x:Name="eventLV" Height="600">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding employeer.surname}"></TextBlock>
+                                            <TextBlock Text=" "></TextBlock>
+                                            <TextBlock Text="{Binding employeer.name}"></TextBlock>
+                                            <TextBlock Text=" "></TextBlock>
+                                            <TextBlock Text="{Binding employeer.patronomyc}"></TextBlock>
+                                            <TextBlock Text=" "></TextBlock>
+                                            <TextBlock Text="{Binding guest.surname}"></TextBlock>
+                                            <TextBlock Text=" "></TextBlock>
+                                            <TextBlock Text="{Binding guest.name}"></TextBlock>
+                                            <TextBlock Text=" "></TextBlock>
+                                            <TextBlock Text="{Binding guest.patronomyc}"></TextBlock>
+                                            <TextBlock Text=" "></TextBlock>
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding date}"></TextBlock>
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Heavy" Text="{Binding event_type.titile}"></TextBlock>
+                                        </StackPanel>
+                                    </StackPanel> 
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel/>
+                                <StackPanel>
+                                    <TextBlock FontSize="18">Имя:</TextBlock>
+                                </StackPanel>
+                                <StackPanel Width="300">
+                                    <TextBox x:Name="fioSearch2" TextChanged="fioSearch2_TextChanged"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <RadioButton x:Name="empList" FontSize="18" Checked="empList_Checked">Работники</RadioButton>
+                            <RadioButton x:Name="gstList" FontSize="18" Checked="gstList_Checked">Посетители</RadioButton>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="securityTab">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">Охрана</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image x:Name="empPhoto" HorizontalAlignment="Left" Width="430" Height="550" Margin="10" Source="/Resources/MGS - Fox Hound.ico"></Image>
+                            <StackPanel HorizontalAlignment="Center">
+                                <Border CornerRadius="10" BorderThickness="1" Background="#D9D9D9">
+                                    <StackPanel Margin ="3" Background="#D9D9D9">
+                                        <TextBlock FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center">Список событий</TextBlock>
+                                        <ListView x:Name="emp_eventLV" Margin="5" Height="350" Width="700">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Vertical">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding employeer.surname}"></TextBlock>
+                                                            <TextBlock Text=" "></TextBlock>
+                                                            <TextBlock Text="{Binding employeer.name}"></TextBlock>
+                                                            <TextBlock Text=" "></TextBlock>
+                                                            <TextBlock Text="{Binding employeer.patronomyc}"></TextBlock>
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock Text="{Binding date}"></TextBlock>
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock FontWeight="Heavy" Text="{Binding event_type.titile}"></TextBlock>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </StackPanel>
+                                </Border>
+                                <Border CornerRadius="10" Margin="0,20,0,0" BorderThickness="1" Background="#D9D9D9">
+                                    <StackPanel Margin="3" Background="#D9D9D9">
+                                        <TextBlock FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" >Информация об объекте</TextBlock>
+                                        <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
+                                            <TextBlock FontSize="20">Отдел</TextBlock>
+                                            <TextBlock FontSize="20" x:Name="departmentTB"></TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
+                                            <TextBlock FontSize="20">ФИО</TextBlock>
+                                            <TextBlock FontSize="20" x:Name="nameTB"></TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
+                                            <TextBlock FontSize="20">Номер</TextBlock>
+                                            <TextBlock FontSize="20" x:Name="uidTB"></TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock x:Name="timeTB" FontSize="36">00:00</TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Bottom">
+                            <Button x:Name="accessAllowedBtn" Template="{DynamicResource ButtonRounded}" FontSize="36" Margin="0,0,10,0" Click="accessAllowedBtn_Click">Разрешить доступ</Button>
+                            <Button x:Name="accessDeniedBtn" Template="{DynamicResource ButtonRounded}" FontSize="36" Background="#FF989898" Foreground="White" Click="accessDeniedBtn_Click">Запретить доступ</Button>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>
